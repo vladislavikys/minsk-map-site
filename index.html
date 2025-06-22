@@ -160,12 +160,28 @@
                 { lat: 53.9213, lng: 27.5756, address: 'ул. Кульман, 46', description: 'Автостоянка № 85', district: 'Советский' }
             ];
 
-            const map = L.map('map').setView([53.9024, 27.5618], 11);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            // --- Слои карты ---
+            const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
+            });
+
+            const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+            });
+
+            const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            });
+
+            // --- Инициализация карты ---
+            const map = L.map('map', {
+                center: [53.9024, 27.5618],
+                zoom: 11,
+                layers: [streets] // Слой по умолчанию
+            });
 
             const parkingIcon = L.divIcon({
                 html: 'P',
@@ -175,10 +191,11 @@
                 popupAnchor: [0, -28]
             });
             
+            // --- Слой с маркерами ---
+            const parkingLayer = L.layerGroup();
             bikeParkingData.forEach(parking => {
-                const marker = L.marker([parking.lat, parking.lng], { icon: parkingIcon }).addTo(map);
+                const marker = L.marker([parking.lat, parking.lng], { icon: parkingIcon }).addTo(parkingLayer);
                 
-                // Создаем HTML для popup
                 const popupContent = `
                     <div class="font-sans">
                         <p class="font-bold text-base">${parking.address}</p>
@@ -197,8 +214,21 @@
                 `;
                 marker.bindPopup(popupContent);
             });
+            parkingLayer.addTo(map); // Добавляем парковки на карту по умолчанию
 
-            // Обработчик для кнопок в popup
+            // --- Контролы на карте ---
+            const baseMaps = {
+                "Улицы": streets,
+                "Спутник": satellite,
+                "Тёмная": dark
+            };
+
+            const overlayMaps = {
+                "Велопарковки": parkingLayer
+            };
+
+            L.control.layers(baseMaps, overlayMaps, { position: 'bottomleft' }).addTo(map);
+
             map.on('popupopen', function(e) {
                 const popupNode = e.popup.getElement();
                 
