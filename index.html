@@ -27,9 +27,8 @@
             margin: 10px 15px;
             width: auto !important;
         }
-        /* Стили для кастомной иконки парковки */
-        .parking-icon {
-            background-color: #3b82f6; /* blue-500 */
+        /* Стили для иконок-кружочков */
+        .dot-icon {
             color: white;
             border-radius: 50%;
             width: 28px;
@@ -43,36 +42,15 @@
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        /* Стили для иконки ресторана */
-        .restaurant-icon {
-            background-color: #ef4444; /* red-500 */
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 16px;
-            line-height: 28px;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        .parking-icon { background-color: #3b82f6; /* blue-500 */ }
+        .restaurant-icon { background-color: #ef4444; /* red-500 */ }
+        
+        /* Стили для иконки-эмодзи */
+        .emoji-icon {
+            font-size: 24px;
+            text-shadow: 0 0 3px #fff;
         }
-        /* Стили для иконки ж/д станции */
-        .train-station-icon {
-            background-color: #22c55e; /* green-500 */
-            color: white;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
+
         /* Стили для кнопки "Найти меня" */
         .leaflet-control-custom {
             cursor: pointer;
@@ -187,13 +165,16 @@
                 { lat: 53.9607, lng: 27.6609, address: 'ул. Авиационная, 33, Копище', description: 'Ресторан Азиатской кухни'},
                 { lat: 53.9156, lng: 27.5694, address: 'пр-т Машерова, 11', description: 'Ресторан Азиатской кухни'}
             ];
-
+            
+            // Обновленный список Ж/Д станций
             const trainStationData = [
-                { lat: 53.8906, lng: 27.5510, address: 'пл. Привокзальная, 3', description: 'Вокзал Минск-Пассажирский' },
-                { lat: 53.8828, lng: 27.5303, address: 'ул. Суражская, 4', description: 'Станция Институт Культуры' },
-                { lat: 53.8966, lng: 27.6042, address: 'ул. Смоленская, 15', description: 'Станция Минск-Восточный' },
-                { lat: 53.9108, lng: 27.5317, address: 'ул. Кальварийская, 45', description: 'Станция Минск-Северный' },
-                { lat: 53.8569, lng: 27.5539, address: 'ул. Лейтенанта Кижеватова, 77', description: 'Станция Минск-Южный' }
+                { lat: 53.8906, lng: 27.5510, address: 'Привокзальная площадь, 3', description: 'Минск-Пассажирский' },
+                { lat: 53.9108, lng: 27.5317, address: 'ул. Кальварийская, 45', description: 'Минск-Северный' },
+                { lat: 53.8569, lng: 27.5539, address: 'ул. Лейтенанта Кижеватова, 77', description: 'Минск-Южный' },
+                { lat: 53.9351, lng: 27.4103, address: 'Вокзальная улица, 1 к1, Ждановичи', description: 'Ждановичи' },
+                { lat: 53.8295, lng: 27.5878, address: 'Профсоюзная, 9а, Минск', description: 'Колядичи' },
+                { lat: 53.9175, lng: 27.6836, address: 'Подлесная улица, 97, Минск', description: 'Степянка' },
+                { lat: 53.9566, lng: 27.6974, address: 'Славянская улица, 35, Минск', description: 'Озерище' }
             ];
 
             const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
@@ -202,9 +183,9 @@
             
             const map = L.map('map', { center: [53.9024, 27.5618], zoom: 11, layers: [streets] });
 
-            const parkingIcon = L.divIcon({ html: 'P', className: 'parking-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
-            const restaurantIcon = L.divIcon({ html: 'N', className: 'restaurant-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
-            const trainStationIcon = L.divIcon({ html: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75V4h3.25a.75.75 0 010 1.5H3a.75.75 0 010-1.5h3.25V2.75A.75.75 0 0110 2zM5.21 6.24A.75.75 0 016 6h8a.75.75 0 01.79.75l1 5A.75.75 0 0115 12H5a.75.75 0 01-.79-.75l-1-5A.75.75 0 015.21 6.24zM10 14a1 1 0 100-2 1 1 0 000 2zm-3.5-1a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>`, className: 'train-station-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            const parkingIcon = L.divIcon({ html: 'P', className: 'dot-icon parking-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            const restaurantIcon = L.divIcon({ html: 'N', className: 'dot-icon restaurant-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            const trainStationIcon = L.divIcon({ html: '🚂', className: 'emoji-icon', iconSize: [24, 24], iconAnchor: [12, 12] });
             
             const createPopupContent = (item) => `
                 <div class="font-sans">
