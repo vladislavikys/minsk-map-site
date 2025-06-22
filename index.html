@@ -44,6 +44,7 @@
         }
         .parking-icon { background-color: #3b82f6; /* blue-500 */ }
         .restaurant-icon { background-color: #ef4444; /* red-500 */ }
+        .regional-train-icon { background-color: #84cc16; /* lime-500 */ }
         
         /* Стили для иконки-эмодзи */
         .emoji-icon {
@@ -166,7 +167,6 @@
                 { lat: 53.9156, lng: 27.5694, address: 'пр-т Машерова, 11', description: 'Ресторан Азиатской кухни'}
             ];
             
-            // Обновленный список Ж/Д станций
             const trainStationData = [
                 { lat: 53.89080795246477, lng: 27.55057607776055, description: 'Минск-Пассажирский', address: 'Минск-Пассажирский' },
                 { lat: 53.87366109704399, lng: 27.520952369211034, description: 'о.п. Столичный', address: 'о.п. Столичный' },
@@ -182,6 +182,49 @@
                 { lat: 53.93275924402853, lng: 27.716394584714823, description: 'Озерище', address: 'Озерище' }
             ];
 
+            const regionalTrainStationData = [
+                // Брестская область
+                { lat: 52.2033, lng: 24.7872, description: "Антополь", address: "г.п. Антополь, ул. Советская, 162" },
+                { lat: 53.1203, lng: 26.0253, description: "Барановичи-Полесские", address: "г. Барановичи, ул. Фроленкова, 13" },
+                { lat: 53.1369, lng: 26.0025, description: "Барановичи-Центральные", address: "г. Барановичи, ул. Вильчковского, 5а" },
+                { lat: 52.5511, lng: 24.9786, description: "Белоозерск", address: "г. Белоозёрск, ул. Шоссейная, 9" },
+                { lat: 52.4939, lng: 24.9703, description: "Береза-Город", address: "г. Берёза, ул. Привокзальная, 16А" },
+                { lat: 52.5539, lng: 24.9089, description: "Береза-Картузская", address: "аг. Первомайская, ул. Привокзальная, 6" },
+                { lat: 52.0833, lng: 23.75, description: "Брест-Восточный", address: "г. Брест, ул. Скрипникова, 112" },
+                { lat: 52.0792, lng: 23.6847, description: "Брест-Центральный", address: "г. Брест, пл. Привокзальная, 1" },
+                { lat: 52.5489, lng: 25.045, description: "Бронная Гора", address: "д. Бронная Гора" },
+                { lat: 52.1281, lng: 26.8375, description: "Видибор", address: "д. Видибор, ул. Железнодорожная, 12" },
+                { lat: 51.7828, lng: 23.6828, description: "Влодава", address: "п. Томашовка" },
+                { lat: 52.3783, lng: 23.4475, description: "Высоко-Литовск", address: "д. Оберовщина" },
+                { lat: 52.7561, lng: 26.2575, description: "Ганцевичи", address: "г. Ганцевичи, ул. Красноармейская, 10" },
+                { lat: 52.15, lng: 24.9667, description: "Городец", address: "д. Городец" },
+                { lat: 51.9833, lng: 26.9667, description: "Горынь", address: "р.п. Речица, ул. Вокзальная, 6" },
+                { lat: 53.0333, lng: 26.0667, description: "Грицевец", address: "д. Лесина" },
+                { lat: 52.6869, lng: 25.3344, description: "Доманово", address: "аг. Доманово, ул. Первомайская, 29А" },
+                { lat: 52.2217, lng: 25.2664, description: "Дрогичин", address: "г. Дрогичин, ул. Вокзальная, 48" },
+                { lat: 52.05, lng: 23.8667, description: "Дубица", address: "д. Дубица" },
+                { lat: 52.2136, lng: 24.3164, description: "Жабинка", address: "г. Жабинка, ул. Пионерская, 8" },
+                { lat: 51.9333, lng: 24.1167, description: "Закрутин", address: "д. Станция Закрутин" },
+                { lat: 52.7594, lng: 25.3089, description: "Ивацевичи", address: "г. Ивацевичи, ул. Заслонова, 2" },
+                { lat: 52.1506, lng: 24.5889, description: "Кобрин", address: "г. Кобрин, ул. Пролетарская, 115" },
+                { lat: 52.8889, lng: 25.4667, description: "Коссово-Полесское", address: "г. Коссово" },
+                { lat: 52.4667, lng: 26.6, description: "Лахва", address: "д. Лахва" },
+                { lat: 53.05, lng: 25.75, description: "Лесная", address: "д. Лесная, ул. Акимова, 14" },
+                { lat: 52.3486, lng: 26.4764, description: "Лунинец", address: "г. Лунинец, ул. Вокзальная, 6" },
+                { lat: 52.4167, lng: 26.5667, description: "Люща", address: "д. Люща, ул. Железнодорожная, 1" },
+                { lat: 53.0333, lng: 26.4333, description: "Ляховичи", address: "г. Ляховичи, ул. Вокзальная, 5" },
+                { lat: 52.3833, lng: 27.2333, description: "Микашевичи", address: "г. Микашевичи, ул. Ленинская" },
+                { lat: 52.5333, lng: 24.5, description: "Оранчицы", address: "п/о Линово" },
+                { lat: 52.2, lng: 26.75, description: "Парохонск", address: "д. Парохонск" },
+                { lat: 52.15, lng: 26.1, description: "Пинск", address: "г. Пинск, ул. Железнодорожная, 19" },
+                { lat: 53.0167, lng: 25.8667, description: "Полонка", address: "д. Полонка" },
+                { lat: 52.9333, lng: 26.3333, description: "Рейтанов", address: "д. Рейтанов" },
+                { lat: 52.4167, lng: 27.0833, description: "Ситница", address: "р.п. Ситница" },
+                { lat: 51.7833, lng: 24.1667, description: "Хотислав", address: "д. Хотислав" },
+                { lat: 52.2167, lng: 25.6, description: "Янов-Полесский", address: "г. Иваново, ул. Железнодорожная" },
+                { lat: 52.1667, lng: 26.4167, description: "Ясельда", address: "д. Ясельда" },
+            ];
+            
             const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
             const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
             const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© <a href="https://carto.com/attributions">CARTO</a>', subdomains: 'abcd', maxZoom: 20 });
@@ -191,6 +234,7 @@
             const parkingIcon = L.divIcon({ html: 'P', className: 'dot-icon parking-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
             const restaurantIcon = L.divIcon({ html: 'N', className: 'dot-icon restaurant-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
             const trainStationIcon = L.divIcon({ html: '🚂', className: 'emoji-icon', iconSize: [24, 24], iconAnchor: [12, 12] });
+            const regionalTrainIcon = L.divIcon({ html: 'T', className: 'dot-icon regional-train-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
             
             const createPopupContent = (item) => `
                 <div class="font-sans">
@@ -220,9 +264,19 @@
             const trainLayer = L.layerGroup();
             trainStationData.forEach(station => L.marker([station.lat, station.lng], { icon: trainStationIcon }).bindPopup(createPopupContent(station)).addTo(trainLayer));
             trainLayer.addTo(map);
+            
+            const regionalTrainLayer = L.layerGroup();
+            regionalTrainStationData.forEach(station => L.marker([station.lat, station.lng], { icon: regionalTrainIcon }).bindPopup(createPopupContent(station)).addTo(regionalTrainLayer));
+            regionalTrainLayer.addTo(map);
+
 
             const baseMaps = { "Улицы": streets, "Спутник": satellite, "Тёмная": dark };
-            const overlayMaps = { "Велопарковки": parkingLayer, "Noodles": restaurantLayer, "Ж/Д Станции": trainLayer };
+            const overlayMaps = { 
+                "Велопарковки": parkingLayer, 
+                "Noodles": restaurantLayer, 
+                "Ж/Д Станции (Минск)": trainLayer,
+                "Ж/Д Станции (Регионы)": regionalTrainLayer
+            };
             L.control.layers(baseMaps, overlayMaps, { position: 'bottomleft' }).addTo(map);
 
             map.on('popupopen', function(e) {
