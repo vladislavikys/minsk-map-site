@@ -44,7 +44,6 @@
         }
         .parking-icon { background-color: #3b82f6; /* blue-500 */ }
         .restaurant-icon { background-color: #ef4444; /* red-500 */ }
-        .regional-train-icon { background-color: #84cc16; /* lime-500 */ }
         
         /* Стили для иконки-эмодзи */
         .emoji-icon {
@@ -182,54 +181,6 @@
                 { lat: 53.93275924402853, lng: 27.716394584714823, description: 'Озерище', address: 'Озерище' }
             ];
 
-            const regionalTrainStationData = [
-                // Брестская область
-                { lat: 52.2033, lng: 24.7872, description: "Антополь", address: "г.п. Антополь, ул. Советская, 162" },
-                { lat: 53.1203, lng: 26.0253, description: "Барановичи-Полесские", address: "г. Барановичи, ул. Фроленкова, 13" },
-                { lat: 53.1369, lng: 26.0025, description: "Барановичи-Центральные", address: "г. Барановичи, ул. Вильчковского, 5а" },
-                { lat: 52.5511, lng: 24.9786, description: "Белоозерск", address: "г. Белоозёрск, ул. Шоссейная, 9" },
-                { lat: 52.4939, lng: 24.9703, description: "Береза-Город", address: "г. Берёза, ул. Привокзальная, 16А" },
-                { lat: 52.5539, lng: 24.9089, description: "Береза-Картузская", address: "аг. Первомайская, ул. Привокзальная, 6" },
-                { lat: 52.0833, lng: 23.75, description: "Брест-Восточный", address: "г. Брест, ул. Скрипникова, 112" },
-                { lat: 52.0792, lng: 23.6847, description: "Брест-Центральный", address: "г. Брест, пл. Привокзальная, 1" },
-                // Витебская область
-                { lat: 55.9388, lng: 28.8924, description: "Алёща", address: "д. Алёща, Малоситнянский сельсовет" },
-                { lat: 55.8425, lng: 27.6433, description: "Бигосово", address: "д. Бигосово" },
-                { lat: 54.8436, lng: 30.1983, description: "Богушевская", address: "г.п. Богушевск, ул. Горбунова, 1" },
-                { lat: 55.7761, lng: 28.2869, description: "Борковичи", address: "п. Борковичи, ул. Вокзальная" },
-                { lat: 54.9186, lng: 28.5036, description: "Боровое", address: "д. Боровое" },
-                { lat: 54.5167, lng: 30.0333, description: "Бурбин", address: "д. Старая Белица" },
-                { lat: 55.7869, lng: 27.9519, description: "Верхнедвинск", address: "д. Боровка, ул. Железнодорожная, 15" },
-                { lat: 55.1953, lng: 30.2028, description: "Витебск", address: "г. Витебск, ул. Космонавтов, 10а" },
-                { lat: 55.23, lng: 30.17, description: "Витьба", address: "Витебский район" },
-                { lat: 55.1983, lng: 27.925, description: "Воропаево", address: "г.п. Воропаево" },
-                { lat: 55.0803, lng: 28.4983, description: "Глубокое", address: "г. Глубокое, ул. Железнодорожная, 12А" },
-                { lat: 55.6167, lng: 29.7, description: "Городок", address: "г. Городок, ул. Вокзальная" },
-                { lat: 55.7, lng: 27.05, description: "Друя", address: "аг. Друя" },
-                { lat: 55.7958, lng: 29.9525, description: "Езерище", address: "г.п. Езерище, ул. Ленинская, 3" },
-                // Гомельская область
-                { lat: 52.4342, lng: 30.9841, description: "Гомель", address: "г. Гомель, Привокзальная площадь, 3" },
-                { lat: 52.5786, lng: 30.9994, description: "Костюковка", address: "г. Гомель, ул. Ерёминская" },
-                { lat: 52.4042, lng: 30.9758, description: "Новобелицкая", address: "г. Гомель, ул. Международная, 33" },
-                { lat: 52.4339, lng: 31.025, description: "Гомель-Нечетный", address: "г. Гомель" },
-                { lat: 52.0458, lng: 29.245, description: "Мозырь", address: "г. Мозырь" },
-                // Гродненская область
-                { lat: 53.68, lng: 23.83, description: "Гродно", address: "г. Гродно, ул. Будённого, 37" },
-                { lat: 53.6669, lng: 23.8828, description: "Аульс", address: "г. Гродно, ул. Аульская, 5Б" },
-                { lat: 53.655, lng: 23.7719, description: "Лососно", address: "г. Гродно, ул. Суворова, 76А" },
-                { lat: 53.89, lng: 25.3, description: "Лида", address: "г. Лида, ул. Труханова, 10В" },
-                // Могилевская область
-                { lat: 53.9031, lng: 30.3419, description: "Могилёв I", address: "г. Могилёв, Привокзальная площадь, 1" },
-                { lat: 53.8767, lng: 30.3664, description: "Могилёв II", address: "г. Могилёв" },
-                { lat: 53.9214, lng: 30.3808, description: "Луполово", address: "г. Могилёв" },
-                { lat: 53.1433, lng: 29.2131, description: "Бобруйск", address: "г. Бобруйск, ул. Железнодорожная, 13" },
-                // Минская область
-                { lat: 54.31, lng: 26.85, description: "Молодечно", address: "г. Молодечно, ул. Вокзальная, 1" },
-                { lat: 54.23, lng: 28.51, description: "Борисов", address: "г. Борисов, ул. Труда, 7а" },
-                { lat: 53.02, lng: 27.55, description: "Слуцк", address: "г. Слуцк, ул. Вокзальная, 1" },
-                { lat: 52.78, lng: 27.54, description: "Солигорск", address: "г. Солигорск, ул. Ленинского Комсомола, 38" }
-            ];
-            
             const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
             const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
             const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© <a href="https://carto.com/attributions">CARTO</a>', subdomains: 'abcd', maxZoom: 20 });
@@ -239,7 +190,6 @@
             const parkingIcon = L.divIcon({ html: 'P', className: 'dot-icon parking-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
             const restaurantIcon = L.divIcon({ html: 'N', className: 'dot-icon restaurant-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
             const trainStationIcon = L.divIcon({ html: '🚂', className: 'emoji-icon', iconSize: [24, 24], iconAnchor: [12, 12] });
-            const regionalTrainIcon = L.divIcon({ html: 'T', className: 'dot-icon regional-train-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
             
             const createPopupContent = (item) => `
                 <div class="font-sans">
@@ -269,19 +219,12 @@
             const trainLayer = L.layerGroup();
             trainStationData.forEach(station => L.marker([station.lat, station.lng], { icon: trainStationIcon }).bindPopup(createPopupContent(station)).addTo(trainLayer));
             trainLayer.addTo(map);
-            
-            const regionalTrainLayer = L.layerGroup();
-            regionalTrainStationData.forEach(station => L.marker([station.lat, station.lng], { icon: regionalTrainIcon }).bindPopup(createPopupContent(station)).addTo(regionalTrainLayer));
-            // Layer is off by default for better performance
-            // regionalTrainLayer.addTo(map);
-
 
             const baseMaps = { "Улицы": streets, "Спутник": satellite, "Тёмная": dark };
             const overlayMaps = { 
                 "Велопарковки": parkingLayer, 
                 "Noodles": restaurantLayer, 
-                "Ж/Д Станции (Минск)": trainLayer,
-                "Ж/Д Станции (Регионы)": regionalTrainLayer
+                "Ж/Д Станции": trainLayer
             };
             L.control.layers(baseMaps, overlayMaps, { position: 'bottomleft' }).addTo(map);
 
