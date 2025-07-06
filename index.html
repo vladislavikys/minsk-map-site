@@ -42,13 +42,15 @@
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        /* Новый стиль для велостанций самообслуживания - зеленый кружок */
-        .self-service-icon { background-color: #22c55e; /* green-500 */ } 
+        .parking-icon { background-color: #3b82f6; /* blue-500 */ }
+        .restaurant-icon { background-color: #ef4444; /* red-500 */ }
+        .station-icon { background-color: #facc15; /* yellow-400 */ } /* Желтый для Ж/Д станций */
+        .self-service-icon { background-color: #22c55e; /* green-500 */ } /* Зеленый для велостанций самообслуживания */
         
         /* Стили для иконки-эмодзи */
         .emoji-icon {
-            font-size: 24px; /* Увеличиваем размер эмодзи, чтобы он был хорошо виден */
-            text-shadow: 0 0 3px #fff; /* Добавляем небольшую тень для лучшей читаемости */
+            font-size: 24px;
+            text-shadow: 0 0 3px #fff;
         }
 
         /* Стили для кнопки "Найти меня" */
@@ -114,6 +116,77 @@
         document.addEventListener('DOMContentLoaded', function() {
             let userLocation = null;
             
+            // Оригинальные данные велопарковок
+            const bikeParkingData = [
+                { lat: 53.8687, lng: 27.6533, address: 'ул. Васнецова, 14', description: 'Автостоянка № 17' },
+                { lat: 53.8407, lng: 27.6575, address: 'ул. Уборевича, 89', description: 'Автостоянка № 18' },
+                { lat: 53.8765, lng: 27.6897, address: 'ул. Алтайская, 1г', description: 'Автостоянка № 21' },
+                { lat: 53.8415, lng: 27.6569, address: 'ул. Уборевича, 81', description: 'Автостоянка № 23' },
+                { lat: 53.8559, lng: 27.6322, address: 'ул. Малинина, 1', description: 'Автостоянка № 46' },
+                { lat: 53.8837, lng: 27.7121, address: 'ул. Нестерова, 47', description: 'Автостоянка № 71' },
+                { lat: 53.8524, lng: 27.6749, address: 'ул. Ротмистрова, 61', description: 'Автостоянка № 73' },
+                { lat: 53.8810, lng: 27.7011, address: 'ул. Илимская, 10а', description: 'Автостоянка № 82' },
+                { lat: 53.8452, lng: 27.5925, address: 'Игуменский тракт, 14', description: 'Автостоянка № 36' },
+                { lat: 53.8341, lng: 27.5939, address: 'Игуменский тракт, 51', description: 'Автостоянка № 38' },
+                { lat: 53.8683, lng: 27.6045, address: 'ул. Якубова, 9', description: 'Автостоянка № 41' },
+                { lat: 53.8436, lng: 27.5878, address: 'ул. Сырокомли, 1', description: 'Автостоянка № 77' },
+                { lat: 53.8340, lng: 27.5790, address: 'ул. Прушинских, 45', description: 'Автостоянка № 78' },
+                { lat: 53.8519, lng: 27.5815, address: 'ул. П. Шпилевского, 50', description: 'Автостоянка № 91' },
+                { lat: 53.8604, lng: 27.4687, address: 'ул. Рафиева, 58', description: 'Автостоянка № 33' },
+                { lat: 53.8679, lng: 27.4764, address: 'пр-т им. Газеты "Звезда", 49а', description: 'Автостоянка № 58' },
+                { lat: 53.8513, lng: 27.4582, address: 'ул. Наполеона Орды, 30', description: 'Автостоянка № 79' },
+                { lat: 53.8559, lng: 27.4475, address: 'ул. Слободская, 8', description: 'Автостоянка № 88' },
+                { lat: 53.8559, lng: 27.4485, address: 'ул. Слободская, 6', description: 'Автостоянка № 89' },
+                { lat: 53.8732, lng: 27.4870, address: 'ул. Алибегова, 1', description: 'Автостоянка № 107' },
+                { lat: 53.8624, lng: 27.5303, address: 'ул. Барамзиной Т.Н., 5', description: 'Автостоянка № 4' },
+                { lat: 53.8441, lng: 27.5367, address: 'ул. Корженевского, 16д', description: 'Автостоянка № 8' },
+                { lat: 53.8828, lng: 27.5458, address: 'ул. Могилевская, 36', description: 'Отдельностоящая велопарковка 5002' },
+                { lat: 53.9038, lng: 27.6111, address: 'ул. Клумова, 18', description: 'Автостоянка № 95' },
+                { lat: 53.9317, lng: 27.6253, address: 'ул. Кнорина, 59', description: 'Автостоянка № 27' },
+                { lat: 53.9313, lng: 27.6416, address: 'ул. Калиновского, 117', description: 'Автостоянка № 29' },
+                { lat: 53.9113, lng: 27.6006, address: 'пер. Козлова, 21', description: 'Автостоянка № 60' },
+                { lat: 53.9438, lng: 27.6917, address: 'ул. Академика Высоцкого, 54', description: 'Автостоянка № 101' },
+                { lat: 53.9100, lng: 27.4200, address: 'ул. Каменногорская', description: 'Автостоянка № 7' },
+                { lat: 53.8967, lng: 27.4410, address: 'ул. М. Горецкого, 28а', description: 'Автостоянка № 31' },
+                { lat: 53.8797, lng: 27.4429, address: 'ул. Шаранговича, 79', description: 'Автостоянка № 37' },
+                { lat: 53.9150, lng: 27.4646, address: '2-й пер. Тимошенко, 5', description: 'Автостоянка № 53' },
+                { lat: 53.8938, lng: 27.4172, address: 'ул. Лобанка, 114', description: 'Автостоянка № 54' },
+                { lat: 53.9015, lng: 27.4334, address: 'ул. Горецкого, 6', description: 'Автостоянка № 65' },
+                { lat: 53.9167, lng: 27.4608, address: 'ул. Тимошенко, 25', description: 'Автостоянка № 69' },
+                { lat: 53.9167, lng: 27.4598, address: 'ул. Тимошенко, 27', description: 'Автостоянка № 70' },
+                { lat: 53.8941, lng: 27.4042, address: 'ул. Маршала Лосика', description: 'Автостоянка № 87' },
+                { lat: 53.9158, lng: 27.4384, address: 'ул. В. Голубка, 8', description: 'Автостоянка № 99' },
+                { lat: 53.9174, lng: 27.4071, address: 'ул. Каменногорская, 100а', description: 'Автостоянка № 108' },
+                { lat: 53.9181, lng: 27.4217, address: 'ул. Каменногорская, 62', description: 'Отдельностоящая велопарковка 5001' },
+                { lat: 53.9298, lng: 27.5192, address: 'ул. Радужная, 5', description: 'Автостоянка № 56' },
+                { lat: 53.9598, lng: 27.5358, address: 'ул. П. Медёлки, 13', description: 'Автостоянка № 110' },
+                { lat: 53.9213, lng: 27.5756, address: 'ул. Кульман, 46', description: 'Автостоянка № 85' }
+            ];
+            
+            // Данные для ресторанов Noodles
+            const restaurantData = [
+                { lat: 53.8706, lng: 27.5514, address: 'улица Братская, 6А', description: 'Ресторан Азиатской кухни'},
+                { lat: 53.9607, lng: 27.6609, address: 'ул. Авиационная, 33, Копище', description: 'Ресторан Азиатской кухни'},
+                { lat: 53.9156, lng: 27.5694, address: 'пр-т Машерова, 11', description: 'Ресторан Азиатской кухни'}
+            ];
+            
+            // Данные для Ж/Д станций
+            const trainStationData = [
+                { lat: 53.89080795246477, lng: 27.55057607776055, description: 'Минск-Пассажирский', address: 'Минск-Пассажирский' },
+                { lat: 53.87366109704399, lng: 27.520952369211034, description: 'о.п. Столичный', address: 'о.п. Столичный' },
+                { lat: 53.80716779878691, lng: 27.580409861489155, description: 'Колядичи', address: 'Колядичи' },
+                { lat: 53.850815518971764, lng: 27.55650533433975, description: 'Лошица', address: 'Лошица' },
+                { lat: 53.86542540556702, lng: 27.560790994863694, description: 'Минск-Южный', address: 'Минск-Южный' },
+                { lat: 53.905959318926925, lng: 27.525721694473233, description: 'Минск-Северный', address: 'Минск-Северный' },
+                { lat: 53.93746492369188, lng: 27.442072402142504, description: 'Лебяжий', address: 'Лебяжий' },
+                { lat: 53.947265162887206, lng: 27.426456948235515, description: 'Ждановичи', address: 'Ждановичи' },
+                { lat: 53.890808114044965, lng: 27.585886336200137, description: 'Минск-Восточный', address: 'Минск-Восточный' },
+                { lat: 53.898903512105655, lng: 27.622485297269773, description: 'ст. Тракторный Завод', address: 'ст. Тракторный Завод' },
+                { lat: 53.91491074954863, lng: 27.66289406174532, description: 'Степянка', address: 'Степянка' },
+                { lat: 53.93275924402853, lng: 27.716394584714823, description: 'Озерище', address: 'Озерище' }
+            ];
+
+            // Ваши велостанции самообслуживания (теперь с зеленым гаечным ключом)
             const selfServiceBikeStations = [
                 { lat: 53.9032, lng: 27.5910, address: 'Петра Мстиславца, 18', description: 'Велостанция самообслуживания (возле магазина Citybikes)' },
                 { lat: 53.9250, lng: 27.5640, address: 'Веры Хоружей, 25 к.6', description: 'Велостанция самообслуживания (возле бара "Молодой")' },
@@ -125,10 +198,13 @@
             const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles © Esri' });
             const dark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '© <a href="https://carto.com/attributions">CARTO</a>', subdomains: 'abcd', maxZoom: 20 });
             
-            const map = L.map('map', { center: [53.9024, 27.5618], zoom: 12, layers: [streets] });
+            const map = L.map('map', { center: [53.9024, 27.5618], zoom: 11, layers: [streets] }); // Вернул исходный зум
 
-            // Новая иконка для велостанций самообслуживания - зеленый кружок с гаечным ключом
-            const selfServiceIcon = L.divIcon({ html: '🔧', className: 'emoji-icon dot-icon self-service-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            // Иконки для разных типов объектов
+            const parkingIcon = L.divIcon({ html: 'P', className: 'dot-icon parking-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            const restaurantIcon = L.divIcon({ html: 'N', className: 'dot-icon restaurant-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            const trainStationIcon = L.divIcon({ html: '🚂', className: 'emoji-icon dot-icon station-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] }); 
+            const selfServiceIcon = L.divIcon({ html: '🔧', className: 'emoji-icon dot-icon self-service-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] }); // Зеленый гаечный ключ для самообслуживания
             
             const createPopupContent = (item) => `
                 <div class="font-sans">
@@ -147,13 +223,29 @@
                 </div>
             `;
             
+            // Слои для разных категорий
+            const parkingLayer = L.layerGroup();
+            bikeParkingData.forEach(parking => L.marker([parking.lat, parking.lng], { icon: parkingIcon }).bindPopup(createPopupContent(parking)).addTo(parkingLayer));
+            parkingLayer.addTo(map);
+
+            const restaurantLayer = L.layerGroup();
+            restaurantData.forEach(restaurant => L.marker([restaurant.lat, restaurant.lng], { icon: restaurantIcon }).bindPopup(createPopupContent(restaurant)).addTo(restaurantLayer));
+            restaurantLayer.addTo(map);
+            
+            const trainLayer = L.layerGroup();
+            trainStationData.forEach(station => L.marker([station.lat, station.lng], { icon: trainStationIcon }).bindPopup(createPopupContent(station)).addTo(trainLayer));
+            trainLayer.addTo(map);
+
             const selfServiceLayer = L.layerGroup();
             selfServiceBikeStations.forEach(station => L.marker([station.lat, station.lng], { icon: selfServiceIcon }).bindPopup(createPopupContent(station)).addTo(selfServiceLayer));
-            selfServiceLayer.addTo(map); 
+            selfServiceLayer.addTo(map); // Добавляем слой велостанций самообслуживания
 
             const baseMaps = { "Улицы": streets, "Спутник": satellite, "Тёмная": dark };
             const overlayMaps = { 
-                "Велостанции самообслуживания": selfServiceLayer 
+                "Велопарковки": parkingLayer, 
+                "Noodles": restaurantLayer, 
+                "Ж/Д Станции": trainLayer,
+                "Велостанции самообслуживания": selfServiceLayer // Снова добавили в контрол слоев
             };
             L.control.layers(baseMaps, overlayMaps, { position: 'bottomleft' }).addTo(map);
 
@@ -166,7 +258,7 @@
                         const lat = this.dataset.lat;
                         const lng = this.dataset.lng;
                         if (userLocation) {
-                            window.open(`https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${lat},${lng}/@${userLocation.lat},${userLocation.lng},15z/data=!4m2!4m1!3e1`, '_blank');
+                            window.open(`http://googleusercontent.com/maps.google.com/3{userLocation.lat},${userLocation.lng}&daddr=${lat},${lng}&dirflg=b`, '_blank');
                         } else {
                             showNotification('Сначала определите свое местоположение.');
                         }
