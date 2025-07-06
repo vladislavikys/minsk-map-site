@@ -44,6 +44,7 @@
         }
         .parking-icon { background-color: #3b82f6; /* blue-500 */ }
         .restaurant-icon { background-color: #ef4444; /* red-500 */ }
+        .station-icon { background-color: #facc15; /* yellow-400 */ } /* Новый стиль для желтых иконок */
         
         /* Стили для иконки-эмодзи */
         .emoji-icon {
@@ -193,8 +194,10 @@
             const map = L.map('map', { center: [53.9024, 27.5618], zoom: 11, layers: [streets] });
 
             const parkingIcon = L.divIcon({ html: 'P', className: 'dot-icon parking-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
+            // Иконка для ресторанов (красный кружок с N)
             const restaurantIcon = L.divIcon({ html: 'N', className: 'dot-icon restaurant-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] });
-            const trainStationIcon = L.divIcon({ html: '🚂', className: 'emoji-icon', iconSize: [24, 24], iconAnchor: [12, 12] });
+            // Иконка для Ж/Д станций (желтый кружок с эмодзи)
+            const trainStationIcon = L.divIcon({ html: '🚂', className: 'emoji-icon dot-icon station-icon', iconSize: [28, 28], iconAnchor: [14, 28], popupAnchor: [0, -28] }); // Изменено
             
             const createPopupContent = (item) => `
                 <div class="font-sans">
@@ -242,7 +245,7 @@
                         const lat = this.dataset.lat;
                         const lng = this.dataset.lng;
                         if (userLocation) {
-                            window.open(`https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${lat},${lng}/data=!4m2!4m1!3e1`, '_blank');
+                            window.open(`http://maps.google.com/maps?saddr=${userLocation.lat},${userLocation.lng}&daddr=${lat},${lng}&dirflg=b`, '_blank');
                         } else {
                             showNotification('Сначала определите свое местоположение.');
                         }
