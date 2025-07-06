@@ -157,7 +157,12 @@
                 { lat: 53.9181, lng: 27.4217, address: 'ул. Каменногорская, 62', description: 'Отдельностоящая велопарковка 5001' },
                 { lat: 53.9298, lng: 27.5192, address: 'ул. Радужная, 5', description: 'Автостоянка № 56' },
                 { lat: 53.9598, lng: 27.5358, address: 'ул. П. Медёлки, 13', description: 'Автостоянка № 110' },
-                { lat: 53.9213, lng: 27.5756, address: 'ул. Кульман, 46', description: 'Автостоянка № 85' }
+                { lat: 53.9213, lng: 27.5756, address: 'ул. Кульман, 46', description: 'Автостоянка № 85' },
+                // Новые велостанции
+                { lat: 53.9032, lng: 27.5910, address: 'Петра Мстиславца, 18', description: 'Велостанция (возле магазина Citybikes)' },
+                { lat: 53.9250, lng: 27.5640, address: 'Веры Хоружей, 25 к.6', description: 'Велостанция (возле бара "Молодой")' },
+                { lat: 53.8967, lng: 27.5702, address: 'Октябрьская, 19 к.4', description: 'Велостанция (возле BURGERLAB)' },
+                { lat: 53.9026, lng: 27.5562, address: 'Куйбышева, 22', description: 'Велостанция (возле скалодрома Plato)' }
             ];
             
             const restaurantData = [
@@ -197,7 +202,7 @@
                     <p class="text-gray-600">${item.address}</p>
                     <div class="mt-2 flex space-x-2">
                         <button class="popup-button route-btn" data-lat="${item.lat}" data-lng="${item.lng}">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
                             Маршрут
                         </button>
                         <button class="popup-button copy-btn" data-address="${item.address}">
@@ -237,7 +242,7 @@
                         const lat = this.dataset.lat;
                         const lng = this.dataset.lng;
                         if (userLocation) {
-                            window.open(`https://www.google.com/maps/dir/?api=1&origin=${userLocation.lat},${userLocation.lng}&destination=${lat},${lng}&travelmode=bicycling`, '_blank');
+                            window.open(`https://www.google.com/maps/dir/${userLocation.lat},${userLocation.lng}/${lat},${lng}/data=!4m2!4m1!3e1`, '_blank');
                         } else {
                             showNotification('Сначала определите свое местоположение.');
                         }
